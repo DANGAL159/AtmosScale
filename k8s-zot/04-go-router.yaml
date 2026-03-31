@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-router
+  namespace: weather-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-router
+  template:
+    metadata:
+      labels:
+        app: go-router
+    spec:
+      containers:
+      - name: go-router
+        image: localhost:5000/go-router:local
+        # imagePullPolicy: IfNotPresent # Evita que K8s intente descargarla de internet
+        ports:
+        - containerPort: 8080
+        env:
+        - name: KAFKA_WRITER_ADDR
+          value: "kafka-writer-service:50051"
+        - name: RABBIT_WRITER_ADDR
+          value: "rabbit-writer-service:50052"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-router-service
+  namespace: weather-system
+spec:
+  selector:
+    app: go-router
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

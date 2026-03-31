@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-consumer
+  namespace: weather-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-consumer
+    spec:
+      containers:
+      - name: kafka-consumer
+        image:  localhost:5000/kafka-consumer:local
+        #imagePullPolicy: IfNotPresent
+        env:
+        - name: KAFKA_BROKER
+          value: "my-cluster-kafka-bootstrap:9092"
+        - name: VALKEY_ADDR
+          value: "valkey-service:6379"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-consumer
+  namespace: weather-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq-consumer
+  template:
+    metadata:
+      labels:
+        app: rabbitmq-consumer
+    spec:
+      containers:
+      - name: rabbitmq-consumer
+        image: localhost:5000/rabbitmq-consumer:local
+        # imagePullPolicy: IfNotPresent
+        env:
+        - name: RABBITMQ_URL
+          value: "amqp://guest:guest@rabbitmq-service:5672/"
+        - name: VALKEY_ADDR
+          value: "valkey-service:6379"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"

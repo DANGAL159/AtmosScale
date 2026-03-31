@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-rust
+  namespace: weather-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-rust
+  template:
+    metadata:
+      labels:
+        app: api-rust
+    spec:
+      containers:
+      - name: api-rust
+        image:  k3d-zot-registry:5000/api-rust:local
+        #imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        env:
+        - name: GO_ROUTER_URL
+          value: "http://go-router-service:8080/tweet" # Apunta al servicio interno de Go
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-rust-service
+  namespace: weather-system
+spec:
+  selector:
+    app: api-rust
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
