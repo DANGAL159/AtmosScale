@@ -1,0 +1,27 @@
+name: Deploy MkDocs to GitHub Pages
+on:
+  push:
+    branches:
+      - main  # Asegúrate de que este sea el nombre de tu rama principal
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: |
+          pip install mkdocs-material 
+          # Si usas más plugins, agrégalos aquí abajo
+
+      - name: Deploy to GitHub Pages
+        run: mkdocs gh-deploy --force

@@ -1,0 +1,30 @@
+site_name: AtmosScale
+theme:
+  name: material
+  palette: 
+    # Modo oscuro automático
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - search.suggest
+    - search.highlight
+
+nav:
+  - Inicio: index.md
+  - Problema: Problema.md
+  - Tecnologias: Tecnologias.md
+  - Guía de Usuario: Manual.md
