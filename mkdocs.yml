@@ -1,4 +1,5 @@
 site_name: AtmosScale
+site_url: https://dangal159.github.io/AtmosScale/
 theme:
   name: material
   palette: 
