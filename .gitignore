@@ -1,0 +1,65 @@
+# --- General & OS ---
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+.env
+.env.*
+
+# --- IDEs (VS Code & JetBrains) ---
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- Rust (api-rust) ---
+/api-rust/target/
+**/*.rs.bk
+# Cargo.lock se suele subir en aplicaciones (binarios), 
+# pero si quieres un repo ultra limpio podrías ignorarlo.
+# Por ahora lo dejamos fuera de la lista de ignorados.
+
+# --- Go (go-router, writers, consumers) ---
+/go-router/bin/
+/go-writers/**/bin/
+/go-consumers/**/bin/
+# Ejecutables de Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+vendor/
+
+# --- Python & Locust (locust-test) ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+.pytest_cache/
+.python-version
+
+# --- Protocol Buffers ---
+# Normalmente subimos los .pb.go para que el repo compile fácil,
+# pero ignoramos archivos temporales de generación.
+*.pb.go.tmp
+
+# --- Docker & Kubernetes ---
+.docker/
+# Si usas k3d/k3s y exportas el config, que no se suba
+kubeconfig
+.kube/
+
+# --- MkDocs (Documentación) ---
+/site/
+.cache/
+
+# --- Otros artefactos de compilación ---
+dist/
+build/
+out/
